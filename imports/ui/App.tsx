@@ -10,6 +10,7 @@ const tasks: Task[] = [
 
 export const App = () => (
   <div>
+    <h1>My Tasks</h1>
     <ul>
       {tasks.map(task => <TaskItem key={task._id} task={task}/>)}
     </ul>
