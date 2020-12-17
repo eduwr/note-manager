@@ -6,14 +6,16 @@ import Task from '/@types/task.interface';
 import {TasksCollection} from '/imports/api/TasksCollection';
 
 import {TaskItem} from './TaskItem'
+import { TaskForm } from './TaskForm';
 
 
 export const App = () =>{ 
   const tasks = useTracker(() => TasksCollection.find({}).fetch())
-  
+
   return (
     <div>
       <h1>My Tasks</h1>
+      <TaskForm></TaskForm>
       <ul>
         {tasks.map(task => <TaskItem key={task._id} task={task}/>)}
       </ul>
