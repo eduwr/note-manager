@@ -1,11 +1,21 @@
+import { Meteor } from 'meteor/meteor';
 import React, {useState, ChangeEvent} from 'react';
 import { TasksCollection } from '../api/TasksCollection';
 
-export const TaskForm = (): JSX.Element => {
+
+interface Props {
+    user: Meteor.User
+}
+
+export const TaskForm = ({user}: Props): JSX.Element => {
     const [text, setText] = useState("")
 
     const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
+        
+        if (!user) {
+            return
+        }
 
         if (!text) {
             alert("Insira um texto")
@@ -14,8 +24,9 @@ export const TaskForm = (): JSX.Element => {
 
         TasksCollection.insert({
             text: text.trim(),
+            userId: user._id,
             createdAt: new Date(),
-            isChecked: false,
+            isChecked: false
         })
 
         setText("")
