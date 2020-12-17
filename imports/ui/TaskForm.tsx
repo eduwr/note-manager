@@ -14,7 +14,8 @@ export const TaskForm = (): JSX.Element => {
 
         TasksCollection.insert({
             text: text.trim(),
-            createdAt: new Date()
+            createdAt: new Date(),
+            isChecked: false,
         })
 
         setText("")

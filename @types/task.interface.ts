@@ -1,5 +1,6 @@
 export default interface Task {
-    _id: number;
+    _id: string;
     text: string;
     createdAt: Date;
+    isChecked: boolean;
 }
