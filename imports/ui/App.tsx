@@ -1,8 +1,6 @@
 import React from 'react';
 import {useTracker} from 'meteor/react-meteor-data';
 
-import Task from '/@types/task.interface';
-
 import {TasksCollection} from '/imports/api/TasksCollection';
 
 import {TaskItem} from './TaskItem'
@@ -10,7 +8,9 @@ import { TaskForm } from './TaskForm';
 
 
 export const App = () =>{ 
-  const tasks = useTracker(() => TasksCollection.find({}).fetch())
+  const tasks = useTracker(() => TasksCollection.find(
+    {}, {sort: { createdAt: -1 }}
+    ).fetch())
 
   return (
     <div>

@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+
 import { TasksCollection } from '/imports/api/TasksCollection';
 
-function insertTask(taskText: string): void {
-  TasksCollection.insert({ text: taskText });
+function insertTask(taskText: string, createdAt: Date): void {
+  TasksCollection.insert({ text: taskText, createdAt });
 }
+
 
 Meteor.startup(() => {
   // If the Links collection is empty, add some data.
