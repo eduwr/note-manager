@@ -6,6 +6,8 @@ import {TasksCollection} from '/imports/api/TasksCollection';
 import {TaskItem} from './TaskItem'
 import { TaskForm } from './TaskForm';
 import Task from '/@types/task.interface';
+import { Meteor } from 'meteor/meteor';
+import { LoginForm } from './LoginForm';
 
 
 export const App = () => {
@@ -37,6 +39,7 @@ export const App = () => {
     pendingTasksCount ? ` (${pendingTasksCount})` : ''
   }`;
 
+  const user = useTracker(() => Meteor.user())
 
   return (
     <div className="app">
@@ -52,24 +55,32 @@ export const App = () => {
       </header>
 
       <div className="main">
-        <TaskForm />
-        <div className="filter">
-         <button onClick={() => setHideCompleted(!hideCompleted)}>
-           {hideCompleted ? 'Show All' : 'Hide Completed'}
-         </button>
-       </div>
-        <ul className="tasks">
-          {tasks.map(task => (
-            <TaskItem
-              key={task._id}
-              task={task}
-              onCheckboxClick={toggleChecked}
-              onDeleteClick={deleteTask}
-              />
-              )
-            )
-          }
-        </ul>
+        {
+          user ? (
+            <>
+              <TaskForm />
+              <div className="filter">
+              <button onClick={() => setHideCompleted(!hideCompleted)}>
+                {hideCompleted ? 'Show All' : 'Hide Completed'}
+              </button>
+            </div>
+              <ul className="tasks">
+                {tasks.map(task => (
+                  <TaskItem
+                    key={task._id}
+                    task={task}
+                    onCheckboxClick={toggleChecked}
+                    onDeleteClick={deleteTask}
+                    />
+                    )
+                  )
+                }
+              </ul>
+            </>
+          ) : (
+            <LoginForm />
+          )
+        }
       </div>
     </div>
   )
